@@ -1,10 +1,10 @@
 const express=require('express')
-const { addUsers, allusers, updateUser, ValidateUser } = require('../controllers/userController')
+const { addUsers, updateUser, ValidateUser, profile, viewall } = require('../controllers/userController')
 const router=express.Router()
 
-router.get('/',allusers)
+router.get('/profile',profile)
 router.post('/',addUsers)
 router.get('/update',updateUser)
 router.get('/login',ValidateUser)
-
+router.get('/all',viewall)
 module.exports=router

@@ -1,3 +1,4 @@
+const Suser  = require('../models/SocialAccounts');
 const user = require('../models/Users')
 
 async function addUsers(req, res) {
@@ -39,4 +40,23 @@ async function profile(req, res) {
 async function viewall(req,res){
     res.json(await user.find())
 }
-module.exports = { addUsers, updateUser, ValidateUser, profile ,viewall}
+async function SocialUsers(req,res){
+   const {profile}=req.body
+   try{
+    const check=await Suser.findOne({email: profile.email})
+    if(!check){
+       const suesr=await Suser.create({
+           name:profile.name,
+           email:profile.email,
+           picture:profile.picture
+       })
+       res.json(suesr).status(200)
+    }
+    res.json(check)
+   }
+    catch(err){
+        res.status(500).send(err)
+    }
+}
+
+module.exports = { addUsers, updateUser, ValidateUser, profile ,viewall,SocialUsers}
